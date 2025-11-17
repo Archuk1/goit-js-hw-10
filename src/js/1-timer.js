@@ -12,9 +12,7 @@ const refs = {
   secondsField: document.querySelector('.field:last-child .value')
 }
 
-document.addEventListener('DOMContentLoaded', e => {
-  refs.btn.classList.add('inactive');
-});
+
 
 const options = {
   enableTime: true,
@@ -23,12 +21,9 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     const selectedDate = selectedDates[0];
-    if (selectedDate <= new Date()) {
-      refs.btn.classList.add('inactive');
-      refs.btn.disabled = true;           
+    if (selectedDate <= new Date()) {   
       iziToast.error({message: "Please choose a date in the future", position:`topRight` });
     } else {
-      refs.btn.classList.remove('inactive');
       refs.btn.disabled = false;
     }
   },
@@ -44,7 +39,7 @@ const picker = flatpickr(refs.datetime, options);
       if (this.isActive) return;
       this.isActive = true;
       refs.datetime.disabled = true;
-      refs.btn.classList.add('inactive');
+      refs.btn.disabled = true;
       this.intervalID = setInterval(() => {
       const endDate = picker.selectedDates[0];
       const date = new Date();
@@ -55,9 +50,7 @@ const picker = flatpickr(refs.datetime, options);
         clearInterval(this.intervalID);
         this.isActive = false;
         refs.datetime.disabled = false;
-        refs.btn.classList.remove('inactive');
       } 
-    
     }, 1000)
     },
 
